@@ -1,0 +1,72 @@
+name: aws Deployment Workflow
+ 
+on:
+  push:
+    branches:
+      - 'master'
+  pull_request: 
+
+permissions:
+    contents: read # This is required for action/checkout
+    pull-requests: write # This is required for github bot to comment PR
+    id-token: write
+
+jobs:
+  check_changes:
+    runs-on: ubuntu-latest
+    outputs:
+      dev_aws: ${{ steps.filter.outputs.dev_aws }}
+      uat_aws: ${{ steps.filter.outputs.uat_aws }}
+      prod_aws: ${{ steps.filter.outputs.prod_aws }}     
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Filter changes
+        id: filter
+        uses: dorny/paths-filter@v2
+        with:
+          filters: |
+            dev_aws:
+              - 'non-prod/dev-env/aws_resources/**'
+            uat_aws:
+              - 'non-prod/uat-env/aws_resources/**'
+            prod_aws:
+              - 'prod/prod-env/aws_resources/**'
+
+#dev
+  deploy_dev_aws:
+    needs: check_changes
+    if: needs.check_changes.outputs.dev_aws == 'true'
+    uses: ./.github/workflows/reusable-workflow.yml
+    with:
+      environment: non-prod
+      cluster: dev-env
+      service: aws_resources
+    secrets: inherit
+
+#uat
+  deploy_uat_aws:
+    needs: check_changes
+    if: needs.check_changes.outputs.uat_aws == 'true'
+    uses: ./.github/workflows/reusable-workflow.yml
+    with:
+      environment: non-prod
+      cluster: uat-env
+      service: aws_resources
+    secrets: inherit
+  
+#prod
+  deploy_prod_aws:
+    needs: check_changes
+    if: needs.check_changes.outputs.prod_aws == 'true'
+    uses: ./.github/workflows/reusable-workflow.yml
+    with:
+      environment: prod
+      cluster: prod-env
+      service: aws_resources
+    secrets: inherit
+
+  
+ 
