@@ -39,7 +39,7 @@ jobs:
   deploy_dev_aws:
     needs: check_changes
     if: needs.check_changes.outputs.dev_aws == 'true'
-    uses: ./.github/workflows/reusable-workflow.yml
+    uses: ./.github/workflows/reusable-workflow.yaml
     with:
       environment: non-prod
       cluster: dev-env
@@ -50,7 +50,7 @@ jobs:
   deploy_uat_aws:
     needs: check_changes
     if: needs.check_changes.outputs.uat_aws == 'true'
-    uses: ./.github/workflows/reusable-workflow.yml
+    uses: ./.github/workflows/reusable-workflow.yaml
     with:
       environment: non-prod
       cluster: uat-env
@@ -61,7 +61,7 @@ jobs:
   deploy_prod_aws:
     needs: check_changes
     if: needs.check_changes.outputs.prod_aws == 'true'
-    uses: ./.github/workflows/reusable-workflow.yml
+    uses: ./.github/workflows/reusable-workflow.yaml
     with:
       environment: prod
       cluster: prod-env
