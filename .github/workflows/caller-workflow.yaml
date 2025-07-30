@@ -3,7 +3,7 @@ name: aws Deployment Workflow
 on:
   push:
     branches:
-      - 'master'
+      - 'main'
   pull_request: 
 
 permissions:
@@ -29,17 +29,17 @@ jobs:
         with:
           filters: |
             dev_aws:
-              - 'non-prod/dev-env/aws_resources/**'
+              - 'non-prod/dev_env/aws_resources/**'
             uat_aws:
-              - 'non-prod/uat-env/aws_resources/**'
+              - 'non-prod/uat_env/aws_resources/**'
             prod_aws:
-              - 'prod/prod-env/aws_resources/**'
+              - 'prod/prod_env/aws_resources/**'
 
 #dev
   deploy_dev_aws:
     needs: check_changes
     if: needs.check_changes.outputs.dev_aws == 'true'
-    uses: ./.github/workflows/reusable-workflow.yml
+    uses: ./.github/workflows/reusable-workflow.yaml
     with:
       environment: non-prod
       cluster: dev-env
@@ -50,7 +50,7 @@ jobs:
   deploy_uat_aws:
     needs: check_changes
     if: needs.check_changes.outputs.uat_aws == 'true'
-    uses: ./.github/workflows/reusable-workflow.yml
+    uses: ./.github/workflows/reusable-workflow.yaml
     with:
       environment: non-prod
       cluster: uat-env
@@ -61,7 +61,7 @@ jobs:
   deploy_prod_aws:
     needs: check_changes
     if: needs.check_changes.outputs.prod_aws == 'true'
-    uses: ./.github/workflows/reusable-workflow.yml
+    uses: ./.github/workflows/reusable-workflow.yaml
     with:
       environment: prod
       cluster: prod-env
