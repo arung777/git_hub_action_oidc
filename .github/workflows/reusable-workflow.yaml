@@ -32,9 +32,9 @@ jobs:
         #TF_VAR_private_ssh_key: "${{ secrets.SSH_PRIVATE_KEY}}"
         #TF_VAR_confluent_cloud_api_key: "${{ secrets.CC_API_KEY }}"
         #TF_VAR_confluent_cloud_api_secret: "${{ secrets.CC_API_SECRET }}"
-        TF_VAR_aws_access_key_id: ""
-        TF_VAR_aws_secret_access_key_id: ""
-        #TF_VAR_aws_account_id: ""
+        TF_VAR_aws_access_key: ${{ secrets.AWS_ACCESS_KEY }}
+        TF_VAR_secret_key: ${{ secrets.SECRET_KEY }}
+        TF_VAR_aws_account_id: ${{ secrets.AWS_ACCOUNT_ID }}
         #TF_VAR_argocd_admin_password: ""
         # TF_VAR_skp_database_password: ""
         # TF_VAR_sensitive_header: ""
@@ -49,18 +49,18 @@ jobs:
 
       - name: 'Set secrets based on environment'
         run: |
-          if [[ "${{ inputs.cluster }}" == "dev-cluster" ]]; then
-            echo "TF_VAR_aws_account_id=${{ secrets.DEV_AWS_ACCOUNT_NO }}" >> $GITHUB_ENV
-            echo "TF_VAR_aws_access_key_id=${{ secrets.aws_access_key }}" >> $GITHUB_ENV
-            echo "TF_VAR_aws_secret_access_key_id=${{ secrets.secret_key }}" >> $GITHUB_ENV
-          elif [[ "${{ inputs.cluster }}" == "uat-cluster" ]]; then
-            echo "TF_VAR_aws_account_id=${{ secrets.UAT_AWS_ACCOUNT_NO }}" >> $GITHUB_ENV
-            echo "TF_VAR_aws_access_key_id=${{ secrets.aws_access_key }}" >> $GITHUB_ENV
-            echo "TF_VAR_aws_secret_access_key_id=${{ secrets.secret_key }}" >> $GITHUB_ENV
-          elif [[ "${{ inputs.cluster }}" == "prod-cluster" ]]; then
-            echo "TF_VAR_aws_account_id=${{ secrets.PROD_AWS_ACCOUNT_NO }}" >> $GITHUB_ENV
-            echo "TF_VAR_aws_access_key_id=${{ secrets.aws_access_key }}" >> $GITHUB_ENV
-            echo "TF_VAR_aws_secret_access_key_id=${{ secrets.secret_key }}" >> $GITHUB_ENV
+          if [[ "${{ inputs.cluster }}" == "dev_aws" ]]; then
+            echo "TF_VAR_aws_account_id=${{ secrets.AWS_ACCOUNT_ID }}" >> $GITHUB_ENV
+            echo "TF_VAR_aws_access_key_id=${{ secrets.AWS_ACCESS_KEY }}" >> $GITHUB_ENV
+            echo "TF_VAR_aws_secret_access_key_id=${{ secrets.SECRET_KEY }}" >> $GITHUB_ENV
+          elif [[ "${{ inputs.cluster }}" == "uat_aws" ]]; then
+            echo "TF_VAR_aws_account_id=${{ secrets.AWS_ACCOUNT_ID }}" >> $GITHUB_ENV
+            echo "TF_VAR_aws_access_key_id=${{ secrets.AWS_ACCESS_KEY }}" >> $GITHUB_ENV
+            echo "TF_VAR_aws_secret_access_key_id=${{ secrets.SECRET_KEY }}" >> $GITHUB_ENV
+          elif [[ "${{ inputs.cluster }}" == "prod_aws" ]]; then
+            echo "TF_VAR_aws_account_id=${{ secrets.AWS_ACCOUNT_ID }}" >> $GITHUB_ENV
+            echo "TF_VAR_aws_access_key_id=${{ secrets.AWS_ACCESS_KEY }}" >> $GITHUB_ENV
+            echo "TF_VAR_aws_secret_access_key_id=${{ secrets.SECRET_KEY }}" >> $GITHUB_ENV
           fi
       
       - name: List all environment variables
@@ -69,8 +69,8 @@ jobs:
       - name: 'Configure AWS Credentials'
         uses: aws-actions/configure-aws-credentials@v1
         with: 
-          aws-access-key-id: '${{ env.TF_VAR_aws_access_key_id }}'
-          aws-secret-access-key: '${{ env.TF_VAR_aws_secret_access_key_id }}'
+          aws-access-key-id: '${{ secrets.AWS_ACCESS_KEY }}'
+          aws-secret-access-key: '${{ secrets.SECRET_KEY }}'
           aws-region: us-east-2
 
 
@@ -108,10 +108,10 @@ jobs:
       #   with:
       #     github-token: ${{ secrets.GITHUB_TOKEN }}
       #     script: |
-      #         const output = `#### Terraform Format and Style 🖌\`${{ steps.fmt.outcome }}\`
-      #         #### Terraform Initialization ⚙️\`${{ steps.init.outcome }}\`
+      #         const output = `#### Terraform Format and Style \`${{ steps.fmt.outcome }}\`
+      #         #### Terraform Initialization \`${{ steps.init.outcome }}\`
       #         #### Terraform Validation \`${{ steps.validate.outcome }}\`
-
+    #
       #         #### Terraform Plan \`${{ steps.plan.outcome }}\`
 
       #         *Pushed by: @${{ github.actor }}, Action: \`${{ github.event_name }}\`*`;

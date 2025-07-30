@@ -16,8 +16,9 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       dev_aws: ${{ steps.filter.outputs.dev_aws }}
-      uat_aws: ${{ steps.filter.outputs.uat_aws }}
-      prod_aws: ${{ steps.filter.outputs.prod_aws }}     
+      # uat_aws: ${{ steps.filter.outputs.uat_aws }}
+      # prod_aws: ${{ steps.filter.outputs.prod_aws }}    
+      # #
 
     steps:
       - name: Checkout code
@@ -42,31 +43,31 @@ jobs:
     uses: ./.github/workflows/reusable-workflow.yaml
     with:
       environment: non-prod
-      cluster: dev-env
+      cluster: dev_env
       service: aws_resources
     secrets: inherit
 
 #uat
-  deploy_uat_aws:
-    needs: check_changes
-    if: needs.check_changes.outputs.uat_aws == 'true'
-    uses: ./.github/workflows/reusable-workflow.yaml
-    with:
-      environment: non-prod
-      cluster: uat-env
-      service: aws_resources
-    secrets: inherit
+#   deploy_uat_aws:
+#     needs: check_changes
+#     if: needs.check_changes.outputs.uat_aws == 'true'
+#     uses: ./.github/workflows/reusable-workflow.yaml
+#     with:
+#       environment: non-prod
+#       cluster: uat_env
+#       service: aws_resources
+#     secrets: inherit
   
-#prod
-  deploy_prod_aws:
-    needs: check_changes
-    if: needs.check_changes.outputs.prod_aws == 'true'
-    uses: ./.github/workflows/reusable-workflow.yaml
-    with:
-      environment: prod
-      cluster: prod-env
-      service: aws_resources
-    secrets: inherit
+# #prod
+#   deploy_prod_aws:
+#     needs: check_changes
+#     if: needs.check_changes.outputs.prod_aws == 'true'
+#     uses: ./.github/workflows/reusable-workflow.yaml
+#     with:
+#       environment: prod
+#       cluster: prod_env
+#       service: aws_resources
+#     secrets: inherit
 
   
  

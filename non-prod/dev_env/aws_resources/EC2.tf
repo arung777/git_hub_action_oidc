@@ -1,5 +1,5 @@
 module "aws_instance" {
-    source = "/home/charan/KT_session_devops/git-hub-actions/modules/AWS_ec2"
+    source = "../../../modules/AWS_ec2"
 
     aws_region       = var.aws_region
     instance_type    = var.instance_type
@@ -12,4 +12,9 @@ module "aws_instance" {
 output "public_ip" {
     value = module.aws_instance.public_ip
     description = "value of the public IP address of the created instance"
+}
+
+output "instance_id" {
+    value = module.aws_instance.instance_id
+    description = "value of the instance ID of the created instance"
 }

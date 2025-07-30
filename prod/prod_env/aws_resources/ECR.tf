@@ -1,5 +1,5 @@
 module "aws_ecr_repository" {
-    source = "/home/charan/KT_session_devops/git-hub-actions/modules/AWS_ECR"
+    source = "../../../modules/AWS_ECR"
     
     name_of_repository = var.name_of_repository
     tag_setting         = var.tag_setting
