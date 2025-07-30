@@ -50,17 +50,17 @@ jobs:
       - name: 'Set secrets based on environment'
         run: |
           if [[ "${{ inputs.cluster }}" == "dev-cluster" ]]; then
-            echo "TF_VAR_aws_account_id=${{ secrets.DEV_AWS_ACCOUNT_NO }}" >> $GITHUB_ENV
-            echo "TF_VAR_aws_access_key_id=${{ secrets.aws_access_key }}" >> $GITHUB_ENV
-            echo "TF_VAR_aws_secret_access_key_id=${{ secrets.secret_key }}" >> $GITHUB_ENV
+            echo "TF_VAR_aws_account_id=${{ secrets.AWS_ACCOUNT_ID }}" >> $GITHUB_ENV
+            echo "TF_VAR_aws_access_key_id=${{ secrets.AWS_ACCESS_KEY }}" >> $GITHUB_ENV
+            echo "TF_VAR_aws_secret_access_key_id=${{ secrets.SECRET_KEY }}" >> $GITHUB_ENV
           elif [[ "${{ inputs.cluster }}" == "uat-cluster" ]]; then
-            echo "TF_VAR_aws_account_id=${{ secrets.UAT_AWS_ACCOUNT_NO }}" >> $GITHUB_ENV
-            echo "TF_VAR_aws_access_key_id=${{ secrets.aws_access_key }}" >> $GITHUB_ENV
-            echo "TF_VAR_aws_secret_access_key_id=${{ secrets.secret_key }}" >> $GITHUB_ENV
+            echo "TF_VAR_aws_account_id=${{ secrets.AWS_ACCOUNT_ID }}" >> $GITHUB_ENV
+            echo "TF_VAR_aws_access_key_id=${{ secrets.AWS_ACCESS_KEY }}" >> $GITHUB_ENV
+            echo "TF_VAR_aws_secret_access_key_id=${{ secrets.SECRET_KEY }}" >> $GITHUB_ENV
           elif [[ "${{ inputs.cluster }}" == "prod-cluster" ]]; then
-            echo "TF_VAR_aws_account_id=${{ secrets.PROD_AWS_ACCOUNT_NO }}" >> $GITHUB_ENV
-            echo "TF_VAR_aws_access_key_id=${{ secrets.aws_access_key }}" >> $GITHUB_ENV
-            echo "TF_VAR_aws_secret_access_key_id=${{ secrets.secret_key }}" >> $GITHUB_ENV
+            echo "TF_VAR_aws_account_id=${{ secrets.AWS_ACCOUNT_ID }}" >> $GITHUB_ENV
+            echo "TF_VAR_aws_access_key_id=${{ secrets.AWS_ACCESS_KEY }}" >> $GITHUB_ENV
+            echo "TF_VAR_aws_secret_access_key_id=${{ secrets.SECRET_KEY }}" >> $GITHUB_ENV
           fi
       
       - name: List all environment variables
@@ -69,8 +69,8 @@ jobs:
       - name: 'Configure AWS Credentials'
         uses: aws-actions/configure-aws-credentials@v1
         with: 
-          aws-access-key-id: '${{ env.TF_VAR_aws_access_key_id }}'
-          aws-secret-access-key: '${{ env.TF_VAR_aws_secret_access_key_id }}'
+          aws-access-key-id: '${{ secerts.AWS_ACCESS_KEY }}'
+          aws-secret-access-key: '${{ secrets.SECRET_KEY }}'
           aws-region: us-east-2
 
 
