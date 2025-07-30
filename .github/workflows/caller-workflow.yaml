@@ -41,7 +41,7 @@ jobs:
     if: needs.check_changes.outputs.dev_aws == 'true'
     uses: ./.github/workflows/reusable-workflow.yaml
     with:
-      environment: non_prod
+      environment: non-prod
       cluster: dev_env
       service: aws_resources
     secrets: inherit
