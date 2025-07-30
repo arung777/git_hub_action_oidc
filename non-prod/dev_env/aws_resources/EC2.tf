@@ -1,5 +1,5 @@
 module "aws_instance" {
-    source = "/home/charan/KT_session_devops/git-hub-actions/modules/AWS_ec2"
+    source = "../../../modules/AWS_ec2"
 
     aws_region       = var.aws_region
     instance_type    = var.instance_type

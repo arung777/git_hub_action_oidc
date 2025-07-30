@@ -1,5 +1,5 @@
 module "myvpc" {
-    source = "/home/charan/KT_session_devops/git-hub-actions/modules/AWS_vpc"
+    source = "../../../modules/AWS_vpc"
 
     aws_region          = var.aws_region
     vpc_tag_name        = var.vpc_tag_name
