@@ -17,7 +17,8 @@ jobs:
     outputs:
       dev_aws: ${{ steps.filter.outputs.dev_aws }}
       # uat_aws: ${{ steps.filter.outputs.uat_aws }}
-      # prod_aws: ${{ steps.filter.outputs.prod_aws }}     
+      # prod_aws: ${{ steps.filter.outputs.prod_aws }}    
+      # 
 
     steps:
       - name: Checkout code
