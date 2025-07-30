@@ -29,11 +29,11 @@ jobs:
         with:
           filters: |
             dev_aws:
-              - 'non-prod/dev-env/aws_resources/**'
+              - 'non-prod/dev_env/aws_resources/**'
             uat_aws:
-              - 'non-prod/uat-env/aws_resources/**'
+              - 'non-prod/uat_env/aws_resources/**'
             prod_aws:
-              - 'prod/prod-env/aws_resources/**'
+              - 'prod/prod_env/aws_resources/**'
 
 #dev
   deploy_dev_aws:
