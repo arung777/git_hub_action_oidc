@@ -13,3 +13,8 @@ output "public_ip" {
     value = module.aws_instance.public_ip
     description = "value of the public IP address of the created instance"
 }
+
+output "instance_id" {
+    value = module.aws_instance.instance_id
+    description = "value of the instance ID of the created instance"
+}
