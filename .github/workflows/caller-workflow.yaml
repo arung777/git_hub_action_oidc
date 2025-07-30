@@ -41,8 +41,8 @@ jobs:
     if: needs.check_changes.outputs.dev_aws == 'true'
     uses: ./.github/workflows/reusable-workflow.yaml
     with:
-      environment: non-prod
-      cluster: dev-env
+      environment: non_prod
+      cluster: dev_env
       service: aws_resources
     secrets: inherit
 
@@ -53,7 +53,7 @@ jobs:
     uses: ./.github/workflows/reusable-workflow.yaml
     with:
       environment: non-prod
-      cluster: uat-env
+      cluster: uat_env
       service: aws_resources
     secrets: inherit
   
@@ -64,7 +64,7 @@ jobs:
     uses: ./.github/workflows/reusable-workflow.yaml
     with:
       environment: prod
-      cluster: prod-env
+      cluster: prod_env
       service: aws_resources
     secrets: inherit
 
