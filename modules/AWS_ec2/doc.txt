@@ -1,0 +1,14 @@
+For aws instance re
+
+
+what is EC2 
+what and why terraform 
+modularity 
+structure explain
+code explain  
+terrform init validate plan apply 
+aws instance ceation verify
+
+
+
+
