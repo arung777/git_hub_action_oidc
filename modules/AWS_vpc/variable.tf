@@ -25,17 +25,17 @@ variable "private_subnet_tag" {
   type        = string 
 }
 
-variable "aws_access_key" {
-  description = "AWS access key for authentication"
-  type        = string
-  sensitive   = true  
-}
+# variable "aws_access_key" {
+#   description = "AWS access key for authentication"
+#   type        = string
+#   sensitive   = true  
+# }
 
-variable "secret_key" {
-  description = "AWS secret key for authentication"
-  type        = string
-  sensitive   = true
-}
+# variable "secret_key" {
+#   description = "AWS secret key for authentication"
+#   type        = string
+#   sensitive   = true
+# }
 
 variable "cidr_block" {
     description = "CIDR block for the VPC"

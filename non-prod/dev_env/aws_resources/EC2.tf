@@ -5,8 +5,8 @@ module "aws_instance" {
     instance_type    = var.instance_type
     ami_id           = var.ami_id
     ec2_tag          = var.ec2_tag
-    aws_access_key   = var.aws_access_key
-    secret_key       = var.secret_key
+    # aws_access_key   = var.aws_access_key
+    # secret_key       = var.secret_key
 }
 
 output "public_ip" {

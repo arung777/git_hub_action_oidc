@@ -19,17 +19,17 @@ variable "scan_on_push" {
   default     = true
 }
 
-variable "aws_access_key" {
-  description = "AWS access key for authentication"
-  type        = string
-  sensitive   = true  
-}
+# variable "aws_access_key" {
+#   description = "AWS access key for authentication"
+#   type        = string
+#   sensitive   = true  
+# }
 
-variable "secret_key" {
-  description = "AWS secret key for authentication"
-  type        = string
-  sensitive   = true
-}
+# variable "secret_key" {
+#   description = "AWS secret key for authentication"
+#   type        = string
+#   sensitive   = true
+# }
 
 
 
