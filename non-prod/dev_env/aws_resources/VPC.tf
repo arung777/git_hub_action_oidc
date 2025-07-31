@@ -19,7 +19,5 @@ output "vpc_cidr_block" {
     description = "CIDR block of the created VPC"
 }
 
-output "vpc_id" {
-    value       = module.myvpc.vpc_id
-    description = "ID of the created VPC"
-}
+
+
