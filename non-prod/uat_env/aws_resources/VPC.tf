@@ -6,11 +6,11 @@ module "myvpc" {
     public_subnet_tag   = var.public_subnet_tag
     route_cidr_block    = var.route_cidr_block
     private_subnet_tag  = var.private_subnet_tag
-    aws_access_key      = var.aws_access_key
-    secret_key          = var.secret_key
     cidr_block          = var.cidr_block
     public_subnet_cidr  = var.public_subnet_cidr
     private_subnet_cidr = var.private_subnet_cidr
+    # aws_access_key      = var.aws_access_key
+    # secret_key          = var.secret_key
     
 }
 
