@@ -48,7 +48,7 @@ variable "ec2_tag" {
 #   description = "The S3 key for Terraform state"
 #   type        = string
 #   default     = "terraform/state"
-#}
+# }
 
 
 
@@ -59,26 +59,26 @@ variable "ec2_tag" {
 #   type        = string 
 # }
 
-variable "vpc_tag_name" {
-  description = "Tag to assign to the VPC"
-  type        = string 
-}
+# variable "vpc_tag_name" {
+#   description = "Tag to assign to the VPC"
+#   type        = string 
+# }
 
-variable "public_subnet_tag" {
-  description = "Tag to assign to the public subnet"
-  type        = string 
+# variable "public_subnet_tag" {
+#   description = "Tag to assign to the public subnet"
+#   type        = string 
   
-}
+# }
 
-variable "route_cidr_block" {
-  description = "CIDR block for the route table"
-  type        = string
+# variable "route_cidr_block" {
+#   description = "CIDR block for the route table"
+#   type        = string
   
-}
-variable "private_subnet_tag" {
-  description = "Tag to assign to the private subnet"
-  type        = string 
-}
+# }
+# variable "private_subnet_tag" {
+#   description = "Tag to assign to the private subnet"
+#   type        = string 
+# }
 
 # variable "aws_access_key" {
 #   description = "AWS access key for authentication"
@@ -92,20 +92,20 @@ variable "private_subnet_tag" {
 #   sensitive   = true
 # }
 
-variable "cidr_block" {
-    description = "CIDR block for the VPC"
-    type        = string
-}
+# variable "cidr_block" {
+#     description = "CIDR block for the VPC"
+#     type        = string
+# }
 
-variable "public_subnet_cidr" {
-    description = "CIDR block for the public subnet"
-    type        = string
-}
+# variable "public_subnet_cidr" {
+#     description = "CIDR block for the public subnet"
+#     type        = string
+# }
 
-variable "private_subnet_cidr" {
-    description = "CIDR block for the private subnet"
-    type        = string
-}
+# variable "private_subnet_cidr" {
+#     description = "CIDR block for the private subnet"
+#     type        = string
+# }
 
 
 
@@ -113,10 +113,10 @@ variable "private_subnet_cidr" {
 
 ######  ECR
 
-# variable "aws_region" {
-#   description = "The AWS region to deploy resources in"
-#   type        = string 
-# }
+variable "aws_region" {
+  description = "The AWS region to deploy resources in"
+  type        = string 
+}
 
 variable "name_of_repository" {
   description = "The name of the ECR repository"
@@ -144,3 +144,21 @@ variable "scan_on_push" {
 #   type        = string
 #   sensitive   = true
 # }
+
+
+
+#### EKS vpc  
+variable "vpc_cidr" {
+  description = "CIDR block of the created VPC"
+  type        = string
+  default = "10.0.0.0/16"
+}
+
+
+### EKS 
+variable "kubernetes_version" {
+  description = "Kubernetes version for the EKS cluster"
+  type        = string
+  default     = "1.21"
+}
+
