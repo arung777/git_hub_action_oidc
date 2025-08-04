@@ -7,6 +7,9 @@ jobs:
   destroy:
     name: Terraform Destroy
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./non-prod/dev_env/aws_resources
 
     permissions:
       id-token: write
