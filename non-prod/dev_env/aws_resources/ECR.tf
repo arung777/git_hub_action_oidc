@@ -7,5 +7,6 @@ module "aws_ecr_repository" {
     aws_region          = var.aws_region
     # aws_access_key      = var.aws_access_key
     # secret_key          = var.secret_key
+    #
   
 }
