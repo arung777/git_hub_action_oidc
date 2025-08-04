@@ -11,13 +11,13 @@ ec2_tag = "dev-TerraformEC2Instance"
 # s3_path = "terraform/state"
 
 ##vpc
-cidr_block = "10.0.0.0/16"
-vpc_tag_name = "dev-TerraformVPC"   
-public_subnet_tag = "dev-TerraformPublicSubnet"
-public_subnet_cidr = "10.0.1.0/24"
-private_subnet_tag = "dev-TerraformPrivateSubnet"
-private_subnet_cidr = "10.0.2.0/24"
-route_cidr_block = "0.0.0.0/0"
+# cidr_block = "10.0.0.0/16"
+# vpc_tag_name = "dev-TerraformVPC"   
+# public_subnet_tag = "dev-TerraformPublicSubnet"
+# public_subnet_cidr = "10.0.1.0/24"
+# private_subnet_tag = "dev-TerraformPrivateSubnet"
+# private_subnet_cidr = "10.0.2.0/24"
+# route_cidr_block = "0.0.0.0/0"
 
 
 #####   ECR 
@@ -25,4 +25,8 @@ route_cidr_block = "0.0.0.0/0"
 name_of_repository = "dev-my-ecr-repo"
 tag_setting = "MUTABLE"
 scan_on_push = true
+
+
+
+
 
