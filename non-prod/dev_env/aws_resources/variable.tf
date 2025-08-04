@@ -113,10 +113,10 @@ variable "ec2_tag" {
 
 ######  ECR
 
-variable "aws_region" {
-  description = "The AWS region to deploy resources in"
-  type        = string 
-}
+# variable "aws_region" {
+#   description = "The AWS region to deploy resources in"
+#   type        = string 
+# }
 
 variable "name_of_repository" {
   description = "The name of the ECR repository"
