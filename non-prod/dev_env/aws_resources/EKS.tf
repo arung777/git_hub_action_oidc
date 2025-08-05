@@ -7,6 +7,10 @@ module "eks" {
 
   enable_irsa = true
 
+  enable_cluster_creator_admin_permissions = true
+  # manage_aws_auth is not supported in this module version and has been removed
+
+
   tags = {
     cluster = "demo"
   }
@@ -18,6 +22,7 @@ module "eks" {
     instance_types         = [var.instance_type]
     vpc_security_group_ids = [aws_security_group.all_worker_mgmt.id]
     iam_role_additional_policies = var.eks_node_iam_role_additional_policies
+    iam_role_arn = aws_iam_role.node_group_role.arn
   }
 
   eks_managed_node_groups = {
@@ -29,4 +34,37 @@ module "eks" {
     }
   }
 }
-#
+
+
+# This is adding authentication for the EKS cluster for node groups
+data "aws_eks_cluster_auth" "cluster" {
+  name = module.eks.cluster_name
+}
+
+provider "kubernetes" {
+  host                   = module.eks.cluster_endpoint
+  cluster_ca_certificate = base64decode(module.eks.cluster_certificate_authority_data)
+  token                  = data.aws_eks_cluster_auth.cluster.token
+}
+
+resource "kubernetes_config_map" "aws_auth" {
+  metadata {
+    name      = "aws-auth"
+    namespace = "kube-system"
+  }
+
+  data = {
+    mapRoles = yamlencode([
+      {
+        rolearn  = module.eks.eks_managed_node_groups.node_group.iam_role_arn
+        username = "system:node:{{EC2PrivateDNSName}}"
+        groups = [
+          "system:bootstrappers",
+          "system:nodes"
+        ]
+      }
+    ])
+  }
+
+  depends_on = [module.eks]
+}
