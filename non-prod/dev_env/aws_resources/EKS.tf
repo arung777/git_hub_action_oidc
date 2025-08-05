@@ -6,7 +6,9 @@ module "eks" {
   subnet_ids      = module.vpc.private_subnets
 
   enable_irsa = true
-
+  cluster_endpoint_public_access  = true   # ← Enable this
+  cluster_endpoint_private_access = true
+  
   enable_cluster_creator_admin_permissions = true
   # manage_aws_auth is not supported in this module version and has been removed
 
