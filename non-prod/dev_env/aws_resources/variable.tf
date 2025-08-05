@@ -163,3 +163,11 @@ variable "kubernetes_version" {
   default     = "1.27"
 }
 
+variable "eks_node_iam_role_additional_policies" {
+  type = map(string)
+  default = {
+    worker   = "arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy"
+    ecr_read = "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly"
+    cni      = "arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy"
+  }
+}
