@@ -17,6 +17,7 @@ module "eks" {
     ami_type               = "AL2_x86_64"
     instance_types         = [var.instance_type]
     vpc_security_group_ids = [aws_security_group.all_worker_mgmt.id]
+    iam_role_additional_policies = var.eks_node_iam_role_additional_policies
   }
 
   eks_managed_node_groups = {
