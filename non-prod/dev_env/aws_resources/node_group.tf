@@ -37,7 +37,6 @@ resource "time_sleep" "wait_for_eks_cluster" {
 
 resource "aws_eks_node_group" "eks-demo-node-group" {
 cluster_name    = var.cluster_name
-depends_on = [time_sleep.wait_for_eks_cluster]
 instance_types = ["t2.micro"]
 ami_type = "AL2_x86_64" # Example AMI, replace with your EKS optimized AMI
 node_role_arn   = aws_iam_role.demo-eks-ng-role.arn
@@ -58,6 +57,7 @@ update_config {
 # Ensure that IAM Role permissions are created before and deleted after EKS Node Group handling.
 # Otherwise, EKS will not be able to properly delete EC2 Instances and Elastic Network Interfaces.
 depends_on = [
+    time_sleep.wait_for_eks_cluster,
     aws_iam_role_policy_attachment.eks-demo-ng-WorkerNodePolicy,
     aws_iam_role_policy_attachment.eks-demo-ng-AmazonEKS_CNI_Policy,
     aws_iam_role_policy_attachment.eks-demo-ng-ContainerRegistryReadOnly,
