@@ -30,6 +30,8 @@ role       = aws_iam_role.demo-eks-ng-role.name
 
 resource "aws_eks_node_group" "eks-demo-node-group" {
 cluster_name    = var.cluster_name
+instance_types = ["t2.micro"]
+ami_type = "AL2_x86_64" # Example AMI, replace with your EKS optimized AMI
 node_role_arn   = aws_iam_role.demo-eks-ng-role.arn
 node_group_name = "demo-eks-node-group"
 subnet_ids      = [
