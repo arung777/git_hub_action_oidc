@@ -6,11 +6,14 @@ data "aws_eks_cluster_auth" "demo-eks-cluster-auth" {
   name = data.aws_eks_cluster.demo-eks-cluster.name
 }
 
-provider "helm" {
-  kubernetes {
+provider "kubernetes" {
     host                   = data.aws_eks_cluster.demo-eks-cluster.endpoint
     token                  = data.aws_eks_cluster_auth.demo-eks-cluster-auth.token
     cluster_ca_certificate = base64decode(data.aws_eks_cluster.demo-eks-cluster.certificate_authority[0].data)
+  }
+provider "helm" {
+  kubernetes {
+    config_path = "~/.kube/config" # (or use config_path, or leave blank for default behavior)
   }
 }
 
