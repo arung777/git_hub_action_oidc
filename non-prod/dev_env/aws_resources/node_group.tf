@@ -29,7 +29,7 @@ role       = aws_iam_role.demo-eks-ng-role.name
 }
 
 resource "time_sleep" "wait_for_eks_cluster" {
-  depends_on = [aws_eks_cluster.demo]
+  depends_on = [aws_eks_cluster.demo-eks-cluster]
   create_duration = "120s"  # Wait for 2 minutes (adjust as needed)
 }
 
