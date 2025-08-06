@@ -28,6 +28,13 @@ policy_arn = "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly"
 role       = aws_iam_role.demo-eks-ng-role.name 
 }
 
+resource "time_sleep" "wait_for_eks_cluster" {
+  depends_on = [aws_eks_cluster.demo-eks-cluster]
+  create_duration = "120s"  # Wait for 2 minutes (adjust as needed)
+}
+
+
+
 resource "aws_eks_node_group" "eks-demo-node-group" {
 cluster_name    = var.cluster_name
 instance_types = ["t2.micro"]
@@ -50,6 +57,7 @@ update_config {
 # Ensure that IAM Role permissions are created before and deleted after EKS Node Group handling.
 # Otherwise, EKS will not be able to properly delete EC2 Instances and Elastic Network Interfaces.
 depends_on = [
+    time_sleep.wait_for_eks_cluster,
     aws_iam_role_policy_attachment.eks-demo-ng-WorkerNodePolicy,
     aws_iam_role_policy_attachment.eks-demo-ng-AmazonEKS_CNI_Policy,
     aws_iam_role_policy_attachment.eks-demo-ng-ContainerRegistryReadOnly,
