@@ -6,7 +6,7 @@ provider "aws" {
 data "aws_availability_zones" "available" {}
 
 locals {
-  cluster_name = "arung-eks-${random_string.suffix.result}"
+  cluster_name = "arung-myeks-${random_string.suffix.result}"
 }
 
 resource "random_string" "suffix" {
