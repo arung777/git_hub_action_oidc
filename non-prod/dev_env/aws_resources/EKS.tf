@@ -16,6 +16,8 @@ module "eks" {
   enable_irsa = true
   vpc_id = module.vpc.vpc_id
 
+  
+
   # Use access entries instead of aws-auth ConfigMap
   access_entries = {
     github_actions = {
@@ -32,6 +34,11 @@ module "eks" {
       }
     }
   }
+
+
+  eks_managed_node_group_defaults = {
+        ami_type = "AL2_x86_64"
+    }
 
   eks_managed_node_groups = {
     node_group = {
