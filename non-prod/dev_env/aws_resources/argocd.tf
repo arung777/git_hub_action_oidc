@@ -1,3 +1,4 @@
+# Data sources to fetch your EKS cluster info (adjust the cluster name if needed)
 data "aws_eks_cluster" "demo-eks-cluster" {
   name = aws_eks_cluster.demo-eks-cluster.name
 }
@@ -6,17 +7,19 @@ data "aws_eks_cluster_auth" "demo-eks-cluster-auth" {
   name = data.aws_eks_cluster.demo-eks-cluster.name
 }
 
+# Kubernetes provider setup for Helm
 provider "kubernetes" {
-    host                   = data.aws_eks_cluster.demo-eks-cluster.endpoint
-    token                  = data.aws_eks_cluster_auth.demo-eks-cluster-auth.token
-    cluster_ca_certificate = base64decode(data.aws_eks_cluster.demo-eks-cluster.certificate_authority[0].data)
-  }
-provider "helm" {
-  kubernetes {
-    config_path = "~/.kube/config" # (or use config_path, or leave blank for default behavior)
-  }
+  host                   = data.aws_eks_cluster.demo-eks-cluster.endpoint
+  token                  = data.aws_eks_cluster_auth.demo-eks-cluster-auth.token
+  cluster_ca_certificate = base64decode(data.aws_eks_cluster.demo-eks-cluster.certificate_authority[0].data)
 }
 
+# Helm provider configuration (do not use a kubernetes block here!)
+provider "helm" {
+  # Optionally specify namespace, debug, etc.
+}
+
+# Install Argo CD with internal Load Balancer for UI (private, secure, minimum resources)
 resource "helm_release" "argocd" {
   name             = "argocd"
   repository       = "https://argoproj.github.io/argo-helm"
@@ -25,17 +28,16 @@ resource "helm_release" "argocd" {
   namespace        = "argocd"
   create_namespace = true
 
-  # Deploy the Argo CD UI as an internal AWS Load Balancer (cheaper, not public)
   set {
     name  = "server.service.type"
     value = "LoadBalancer"
   }
+
   set {
     name  = "server.service.annotations.\"service\\.beta\\.kubernetes\\.io/aws-load-balancer-internal\""
     value = "true"
   }
 
-  # Reduce Argo CD resource consumption for test/dev:
   set {
     name  = "controller.replicas"
     value = "1"
@@ -52,7 +54,6 @@ resource "helm_release" "argocd" {
     name  = "applicationSet.replicaCount"
     value = "1"
   }
-  # Using small pod resources for minimal cost
   set {
     name  = "server.resources.requests.cpu"
     value = "100m"
@@ -63,7 +64,7 @@ resource "helm_release" "argocd" {
   }
 }
 
-# Output the command to get the Argo CD admin password
 output "argocd_admin_password_cmd" {
-  value = "kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath='{.data.password}' | base64 -d"
+  value       = "kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath='{.data.password}' | base64 -d"
+  description = "Run this command to get the Argo CD initial admin password"
 }
