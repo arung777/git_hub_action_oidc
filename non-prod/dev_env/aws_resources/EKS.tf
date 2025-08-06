@@ -65,3 +65,4 @@ resource "aws_eks_access_policy_association" "devops_arung_admin_policy" {
 
   depends_on = [aws_eks_access_entry.devops_arung]
 }
+

@@ -28,8 +28,16 @@ policy_arn = "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly"
 role       = aws_iam_role.demo-eks-ng-role.name 
 }
 
+resource "time_sleep" "wait_for_eks_cluster" {
+  depends_on = [aws_eks_cluster.demo]
+  create_duration = "120s"  # Wait for 2 minutes (adjust as needed)
+}
+
+
+
 resource "aws_eks_node_group" "eks-demo-node-group" {
 cluster_name    = var.cluster_name
+depends_on = [time_sleep.wait_for_eks_cluster]
 instance_types = ["t2.micro"]
 ami_type = "AL2_x86_64" # Example AMI, replace with your EKS optimized AMI
 node_role_arn   = aws_iam_role.demo-eks-ng-role.arn
