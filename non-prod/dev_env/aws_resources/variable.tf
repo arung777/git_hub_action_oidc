@@ -160,7 +160,7 @@ variable "vpc_cidr" {
 variable "kubernetes_version" {
   description = "Kubernetes version for the EKS cluster"
   type        = string
-  default     = "1.27"
+  default     = "1.29"
 }
 
 variable "eks_node_iam_role_additional_policies" {
