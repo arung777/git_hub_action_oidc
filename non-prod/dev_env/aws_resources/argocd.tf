@@ -29,7 +29,7 @@ resource "helm_release" "argocd" {
   version          = "5.51.6"   # Pin to a stable version; update as needed
   namespace        = "argocd"
   create_namespace = true
-  timeout          = 600
+  timeout          = 1200
 
   set = [
     {
