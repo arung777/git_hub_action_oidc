@@ -1,11 +1,11 @@
----
-global:
-  image:
-    tag: "v2.6.6"
+# ---
+# global:
+#   image:
+#     tag: "v2.6.6"
 
-dex:
-  enabled: false
+# dex:
+#   enabled: false
 
-server:
-  extraArgs:
-    - --insecure
+# server:
+#   extraArgs:
+#     - --insecure
