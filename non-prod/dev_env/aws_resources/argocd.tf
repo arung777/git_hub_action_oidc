@@ -16,7 +16,9 @@ provider "kubernetes" {
 
 # Helm provider configuration (do not use a kubernetes block here!)
 provider "helm" {
-  # Optionally specify namespace, debug, etc.
+    kubernetes {
+            config_path = "~/.kube/config"
+}
 }
 
 # Install Argo CD with internal Load Balancer for UI (private, secure, minimum resources)
@@ -28,6 +30,7 @@ resource "helm_release" "argocd" {
   namespace        = "argocd"
   create_namespace = true
 
+  depends_on = [ aws_eks_cluster.demo-eks-cluster.name ]
   set {
     name  = "server.service.type"
     value = "LoadBalancer"
@@ -38,30 +41,30 @@ resource "helm_release" "argocd" {
     value = "true"
   }
 
-  set {
-    name  = "controller.replicas"
-    value = "1"
-  }
-  set {
-    name  = "server.replicas"
-    value = "1"
-  }
-  set {
-    name  = "repoServer.replicas"
-    value = "1"
-  }
-  set {
-    name  = "applicationSet.replicaCount"
-    value = "1"
-  }
-  set {
-    name  = "server.resources.requests.cpu"
-    value = "100m"
-  }
-  set {
-    name  = "server.resources.requests.memory"
-    value = "128Mi"
-  }
+#   set {
+#     name  = "controller.replicas"
+#     value = "1"
+#   }
+#   set {
+#     name  = "server.replicas"
+#     value = "1"
+#   }
+#   set {
+#     name  = "repoServer.replicas"
+#     value = "1"
+#   }
+#   set {
+#     name  = "applicationSet.replicaCount"
+#     value = "1"
+#   }
+#   set {
+#     name  = "server.resources.requests.cpu"
+#     value = "100m"
+#   }
+#   set {
+#     name  = "server.resources.requests.memory"
+#     value = "128Mi"
+#   }
 }
 
 output "argocd_admin_password_cmd" {
