@@ -17,7 +17,12 @@ provider "kubernetes" {
 
 # 3. Helm provider to install Helm charts into the Kubernetes cluster
 provider "helm" {
-##########
+    kubernetes {
+        host                   = data.aws_eks_cluster.demo.endpoint
+        token                  = data.aws_eks_cluster_auth.demo.token
+        cluster_ca_certificate = base64decode(data.aws_eks_cluster.demo.certificate_authority[0].data)
+        config_path = "~/.kube/config"  # Ensure this points to your current kubeconfig
+    }
 }
 
 # 4. Helm release resource to install Argo CD
