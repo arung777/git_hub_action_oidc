@@ -17,7 +17,7 @@ provider "kubernetes" {
 
 # 3. Helm provider to install Helm charts into the Kubernetes cluster
 provider "helm" {
-#####
+##########
 }
 
 # 4. Helm release resource to install Argo CD
