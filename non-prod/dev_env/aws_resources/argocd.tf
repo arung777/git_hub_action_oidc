@@ -31,39 +31,40 @@ resource "helm_release" "argocd" {
   create_namespace = true
   timeout          = 600
 
-  set{
+  set = [
+    {
       name  = "server.service.type"
       value = "LoadBalancer"
-    }
-  set {
+    },
+   {
       name  = "server.service.annotations.\"service\\.beta\\.kubernetes\\.io/aws-load-balancer-internal\""
       value = "true"
-    }
-  set  {
+    },
+    {
       name  = "controller.replicas"
       value = "1"
-    }
-  set  {
+    },
+    {
       name  = "server.replicas"
       value = "1"
-    }
-  set {
+    },
+   {
       name  = "repoServer.replicas"
       value = "1"
-    }
-  set {
+    },
+   {
       name  = "applicationSet.replicaCount"
       value = "1"
-    }
-  set {
+    },
+   {
       name  = "server.resources.requests.cpu"
       value = "100m"
-    }
-  set  {
+    },
+    {
       name  = "server.resources.requests.memory"
       value = "128Mi"
     }
-  
+  ]
 }
 
 # 5. Output command to get Argo CD admin password easily after deployment
