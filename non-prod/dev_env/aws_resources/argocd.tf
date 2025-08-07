@@ -4,7 +4,7 @@ data "aws_eks_cluster" "demo" {
 }
 
 data "aws_eks_cluster_auth" "demo" {
-  name = data.aws_eks_cluster.demo-eks-cluster.name
+  name = data.aws_eks_cluster.demo.name
 }
 
 # 2. Kubernetes provider to communicate with EKS
@@ -12,13 +12,12 @@ provider "kubernetes" {
   host                   = data.aws_eks_cluster.demo.endpoint
   token                  = data.aws_eks_cluster_auth.demo.token
   cluster_ca_certificate = base64decode(data.aws_eks_cluster.demo.certificate_authority[0].data)
+  config_path = "~/.kube/config"
 }
 
 # 3. Helm provider to install Helm charts into the Kubernetes cluster
 provider "helm" {
-  kubernetes {
-    config_path = "~/.kube/config"  # Optional; if your kubeconfig is properly set, you can omit this.
-  }
+#####
 }
 
 # 4. Helm release resource to install Argo CD
