@@ -73,6 +73,8 @@ jobs:
           role-to-assume: ${{ secrets.AWS_ROLE }}
           aws-region: us-east-2
 
+      - name: Update kubeconfig for EKS
+        run: aws eks update-kubeconfig --region us-east-2 --name demo-eks-cluster
 
       - name: 'Setup Terraform CLI'
         uses: hashicorp/setup-terraform@v1
