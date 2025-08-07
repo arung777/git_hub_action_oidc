@@ -17,6 +17,7 @@ provider "kubernetes" {
 # 3. Helm provider to install Helm charts into the Kubernetes cluster
 provider "helm" {
     kubernetes =  {
+        config_path = "~/.kube/config"
     }
 }
 
