@@ -16,9 +16,9 @@ provider "kubernetes" {
 
 # Helm provider configuration (do not use a kubernetes block here!)
 provider "helm" {
-    kubernetes {
-            config_path = "~/.kube/config"
-}
+#     kubernetes = {
+#             config_path = "~/.kube/config"
+#   }
 }
 
 # Install Argo CD with internal Load Balancer for UI (private, secure, minimum resources)
