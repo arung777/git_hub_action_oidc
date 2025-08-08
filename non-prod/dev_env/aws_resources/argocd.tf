@@ -1,3 +1,15 @@
+resource "null_resource" "update_kubeconfig" {
+  provisioner "local-exec" {
+    command = "aws eks update-kubeconfig --region ${var.region} --name ${var.cluster_name}"
+  }
+
+  depends_on = [
+    aws_eks_cluster.demo-eks-cluster,
+    aws_eks_node_group.eks-demo-node-group
+  ]
+}
+
+
 # 1. Fetch cluster info and auth token for Terraform providers
 data "aws_eks_cluster" "demo" {
   name =  var.cluster_name # Replace with your EKS cluster name or use aws_eks_cluster resource output
