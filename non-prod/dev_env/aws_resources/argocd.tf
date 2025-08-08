@@ -11,19 +11,19 @@ resource "null_resource" "update_kubeconfig" {
 
 
 # 1. Fetch cluster info and auth token for Terraform providers
-data "aws_eks_cluster" "demo-eks-cluster" {
+data "aws_eks_cluster" "demo" {
   name =  var.cluster_name # Replace with your EKS cluster name or use aws_eks_cluster resource output
 }
 
-data "aws_eks_cluster_auth" "demo-eks-cluster-auth" {
-  name = data.aws_eks_cluster.demo-eks-cluster.name
+data "aws_eks_cluster_auth" "demo" {
+  name = data.aws_eks_cluster.demo.name
 }
 
 # 2. Kubernetes provider to communicate with EKS
 provider "kubernetes" {
-  host                   = data.aws_eks_cluster.demo-eks-cluster.endpoint
-  token                  = data.aws_eks_cluster_auth.demo-eks-cluster-auth.token
-  cluster_ca_certificate = base64decode(data.aws_eks_cluster.demo-eks-cluster.certificate_authority[0].data)
+  host                   = data.aws_eks_cluster.demo.endpoint
+  token                  = data.aws_eks_cluster_auth.demo.token
+  cluster_ca_certificate = base64decode(data.aws_eks_cluster.demo.certificate_authority[0].data)
 }
 
 # 3. Helm provider to install Helm charts into the Kubernetes cluster
