@@ -12,7 +12,7 @@ resource "null_resource" "update_kubeconfig" {
 
 # 1. Fetch cluster info and auth token for Terraform providers
 data "aws_eks_cluster" "demo" {
-  name =  var.cluster_name # Replace with your EKS cluster name or use aws_eks_cluster resource output
+  name =  aws_eks_cluster.demo-eks-cluster.name # Replace with your EKS cluster name or use aws_eks_cluster resource output
 }
 
 data "aws_eks_cluster_auth" "demo" {
