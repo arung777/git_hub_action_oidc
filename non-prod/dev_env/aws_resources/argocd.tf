@@ -29,9 +29,9 @@ provider "kubernetes" {
 
 # 3. Helm provider to install Helm charts into the Kubernetes cluster
 provider "helm" {
-    # kubernetes =  {
-    #     config_path = "~/.kube/config"
-    # }
+    kubernetes =  {
+        config_path = "~/.kube/config"
+    }
 }
 
 # 4. Helm release resource to install Argo CD
