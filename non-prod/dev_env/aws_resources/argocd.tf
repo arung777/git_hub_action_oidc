@@ -77,6 +77,10 @@ resource "helm_release" "argocd" {
       value = "128Mi"
     }
   ]
+   depends_on = [
+    aws_eks_cluster.demo-eks-cluster,
+    aws_eks_node_group.eks-demo-node-group
+  ]
 }
 
 # 5. Output command to get Argo CD admin password easily after deployment
