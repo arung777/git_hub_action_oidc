@@ -12,7 +12,7 @@ resource "null_resource" "update_kubeconfig" {
 
 # 1. Fetch cluster info and auth token for Terraform providers
 data "aws_eks_cluster" "demo" {
-  name =  var.cluster_name # Replace with your EKS cluster name or use aws_eks_cluster resource output
+  name =  aws_eks_cluster.demo-eks-cluster.name # Replace with your EKS cluster name or use aws_eks_cluster resource output
 }
 
 data "aws_eks_cluster_auth" "demo" {
@@ -76,6 +76,10 @@ resource "helm_release" "argocd" {
       name  = "server.resources.requests.memory"
       value = "128Mi"
     }
+  ]
+   depends_on = [
+    aws_eks_cluster.demo-eks-cluster,
+    aws_eks_node_group.eks-demo-node-group
   ]
 }
 
