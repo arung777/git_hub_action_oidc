@@ -1,14 +1,14 @@
-resource "null_resource" "update_kubeconfig" {
-  provisioner "local-exec" {
+# resource "null_resource" "update_kubeconfig" {
+#   provisioner "local-exec" {
     
-    command = "aws eks update-kubeconfig --region ${var.region} --name ${var.cluster_name}"
-  }
+#     command = "aws eks update-kubeconfig --region ${var.region} --name ${var.cluster_name}"
+#   }
 
-  depends_on = [
-    aws_eks_cluster.demo-eks-cluster,
-    aws_eks_node_group.eks-demo-node-group
-  ]
-}
+#   depends_on = [
+#     aws_eks_cluster.demo-eks-cluster,
+#     aws_eks_node_group.eks-demo-node-group
+#   ]
+# }
 
 
 # 1. Fetch cluster info and auth token for Terraform providers
@@ -30,7 +30,9 @@ provider "kubernetes" {
 # 3. Helm provider to install Helm charts into the Kubernetes cluster
 provider "helm" {
     kubernetes =  {
-        config_path = "~/.kube/config"
+        host                   = data.aws_eks_cluster.demo.endpoint
+        token                  = data.aws_eks_cluster_auth.demo.token
+        cluster_ca_certificate = base64decode(data.aws_eks_cluster.demo.certificate_authority[0].data)
     }
 }
 
@@ -79,7 +81,7 @@ resource "helm_release" "argocd" {
     }
   ]
    depends_on = [
-    null_resource.update_kubeconfig,  # Ensure kubeconfig is updated before installing Argo CD
+    # null_resource.update_kubeconfig,  # Ensure kubeconfig is updated before installing Argo CD
     aws_eks_cluster.demo-eks-cluster,
     aws_eks_node_group.eks-demo-node-group
   ]
