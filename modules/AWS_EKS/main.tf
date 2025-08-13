@@ -307,19 +307,7 @@ data "aws_eks_cluster_auth" "demo" {
   name = data.aws_eks_cluster.demo.name
 }
 
-provider "kubernetes" {
-  host                   = data.aws_eks_cluster.demo.endpoint
-  token                  = data.aws_eks_cluster_auth.demo.token
-  cluster_ca_certificate = base64decode(data.aws_eks_cluster.demo.certificate_authority[0].data)
-}
 
-provider "helm" {
-  kubernetes  {
-    host                   = data.aws_eks_cluster.demo.endpoint
-    token                  = data.aws_eks_cluster_auth.demo.token
-    cluster_ca_certificate = base64decode(data.aws_eks_cluster.demo.certificate_authority[0].data)
-  }
-}
 
 resource "helm_release" "argocd" {
   name             = "argocd"
@@ -329,41 +317,42 @@ resource "helm_release" "argocd" {
   namespace        = "argocd"
   create_namespace = true
   timeout          = 1200
+  
 
-  set = [
-    {
+
+  set  {
       name  = "server.service.type"
       value = "LoadBalancer"
-    },
-    {
+    }
+  set  {
       name  = "server.service.annotations.\"service\\.beta\\.kubernetes\\.io/aws-load-balancer-internal\""
       value = "true"
-    },
-    {
+    }
+  set  {
       name  = "controller.replicas"
       value = "1"
-    },
-    {
+    }
+  set  {
       name  = "server.replicas"
       value = "1"
-    },
-    {
+    }
+  set  {
       name  = "repoServer.replicas"
       value = "1"
-    },
-    {
+    }
+  set  {
       name  = "applicationSet.replicaCount"
       value = "1"
-    },
-    {
+    }
+  set  {
       name  = "server.resources.requests.cpu"
       value = "100m"
-    },
-    {
+    }
+  set  {
       name  = "server.resources.requests.memory"
       value = "128Mi"
     }
-  ]
+  
 
   depends_on = [
     aws_eks_cluster.demo-eks-cluster,
