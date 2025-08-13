@@ -307,7 +307,18 @@ data "aws_eks_cluster_auth" "demo" {
   name = data.aws_eks_cluster.demo.name
 }
 
-
+provider "kubernetes" {
+  host                   = data.aws_eks_cluster.demo.endpoint
+  token                  = data.aws_eks_cluster_auth.demo.token
+  cluster_ca_certificate = base64decode(data.aws_eks_cluster.demo.certificate_authority[0].data)
+}
+provider "helm" {
+  kubernetes  {
+    host                   = data.aws_eks_cluster.demo.endpoint
+    token                  = data.aws_eks_cluster_auth.demo.token
+    cluster_ca_certificate = base64decode(data.aws_eks_cluster.demo.certificate_authority[0].data)
+  }
+}
 
 resource "helm_release" "argocd" {
   name             = "argocd"
