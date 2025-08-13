@@ -352,7 +352,8 @@ resource "helm_release" "argocd" {
   #     name  = "server.resources.requests.memory"
   #     value = "128Mi"
   #   }
-  
+  #############
+  ###########
 
   depends_on = [
     aws_eks_cluster.demo-eks-cluster,
