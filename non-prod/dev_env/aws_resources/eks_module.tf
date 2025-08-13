@@ -1,5 +1,6 @@
 module "eks" {
   source       = "../../../modules/AWS_EKS"
+  vpc_name     = var.vpc_name
   region       = var.region
   cidr_block   = var.cidr_block
   tags         = var.tags
