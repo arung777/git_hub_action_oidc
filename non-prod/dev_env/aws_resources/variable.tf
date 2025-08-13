@@ -176,7 +176,7 @@
 
 
 
-
+######EKS cluter variables
 
 variable "region" {
 type = string
