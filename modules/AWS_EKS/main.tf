@@ -182,6 +182,12 @@ resource "aws_eks_access_policy_association" "devops_arung_admin_policy" {
   depends_on = [aws_eks_access_entry.devops_arung]
 }
 
+
+############### node group creation #######################
+
+
+
+
 resource "aws_iam_role" "demo-eks-ng-role" {
   name               = "demo-eks-node-group-role"
   assume_role_policy = jsonencode({
@@ -218,9 +224,7 @@ resource "time_sleep" "wait_for_eks_cluster" {
 
 
 
-
-############Node-Group Creation #######################
-
+##Node Group Creation
 resource "aws_eks_node_group" "eks-demo-node-group" {
   cluster_name    = var.cluster_name
   instance_types  = ["t3.medium"]
