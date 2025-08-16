@@ -153,12 +153,12 @@ resource "aws_eks_cluster" "demo-eks-cluster" {
     bootstrap_cluster_creator_admin_permissions = true
   }
 
-  bootstrap_self_managed_addons = true
+  bootstrap_self_managed_addons = true    ###(kube-proxy, CoreDNS, CNI)
   tags                          = var.tags
   version                       = var.eks_version
 
   upgrade_policy {
-    support_type = "STANDARD"
+    support_type = "STANDARD"      
   }
 
   depends_on = [aws_iam_role_policy_attachment.eks_cluster_policy]
