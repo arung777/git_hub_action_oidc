@@ -34,14 +34,14 @@ jobs:
         run: terraform init
       
       # Destroy all Node Groups explicitly first
-      - name: Terraform Destroy Node Groups
-        run: |
-          terraform destroy -auto-approve -target=aws_eks_node_group.eks-demo-node-group || echo "Node group may not exist; continuing..."
+      # - name: Terraform Destroy Node Groups
+      #   run: |
+      #     terraform destroy -auto-approve -target=aws_eks_node_group.eks-demo-node-group || echo "Node group may not exist; continuing..."
 
-      # Destroy Fargate profiles if present (optional; update resource name if needed)
-      - name: Terraform Destroy Fargate Profile
-        run: |
-          terraform destroy -auto-approve -target=aws_eks_fargate_profile.demo-eks-fg-prof || echo "Fargate profile may not exist; continuing..."
+      # # Destroy Fargate profiles if present (optional; update resource name if needed)
+      # - name: Terraform Destroy Fargate Profile
+      #   run: |
+      #     terraform destroy -auto-approve -target=aws_eks_fargate_profile.demo-eks-fg-prof || echo "Fargate profile may not exist; continuing..."
 
       - name: Terraform Destroy
         run: terraform destroy -auto-approve
